@@ -27,10 +27,16 @@ print("************************************************")
 
 # Option 2 get student information and print to a .txt file
 
-with open('grades.csv', 'r') as file:
-    lines = csv.DictReader(file)
+dataset = pd.read_csv("grades.csv")
+blankIndex=[''] * len(dataset)
+dataset.index=blankIndex
+print(dataset)
+exams = ['exam 1','exam 2','exam 3']
+average = round(dataset[exams].sum(axis=1)/3,2)
+print(f"Exam mean:{average}")
+'''with open('grades.csv', 'r') as file:
+    lines = csv.DictReader(file)'''
     # uin = input("Enter the uin: ")
-    for row in lines:
-        print(row['UIN'])
+    
     
     
