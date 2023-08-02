@@ -27,10 +27,16 @@ print("************************************************")
 
 # Option 2 get student information and print to a .txt file
 
+# I WILL PUT ALL GRADE CALCULATIONS INTO THEIR OWN FUNCTION ONCE I FIGURE OUT HOW TO ACCESS EACH ELEMENT IN THE TABLE
+
+# with panda I read the grades.csv file and assigned to to variable dataset
 dataset = pd.read_csv("grades.csv")
+# I removed the index from before each row in the data set to match with pronting format
 blankIndex=[''] * len(dataset)
 dataset.index=blankIndex
-print(dataset)
+print(dataset) #The printed dataset for now (DELETE LATER)
+
+# Accesses each exam score and calculates the average
 exams = ['exam 1','exam 2','exam 3']
 average = round(dataset[exams].sum(axis=1)/3,2)
 print(f"Exam mean:{average}")
