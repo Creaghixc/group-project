@@ -8,3 +8,5 @@ print("6. Quit")
 print("************************************************")
 
 option = input("")
+
+file_name = (input(),'r')
