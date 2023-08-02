@@ -12,7 +12,9 @@ import os
 # file_rows[x][13] - file_rows[x][18] : Reading 1 through 6
 # file_rows[x][19] - file_rows[x][21] : Exams 1 through 3
 # file_rows[x][22] : Project
-# Known issues : Saving the figures appends the new bar graphs to each preceeding figure so only the exam chart is really correct
+
+# Known issues : Saving the figures appends the new bar graphs to each preceeding figure so only the exam chart is really correct,
+#                   If the function has been run for a UIN already, line 35 will cause a FileExistsError (Fixed 5:38 2/8/23),
 
 def generate_student_report_charts(uin, grade_file):
     with open(grade_file, 'r') as file:
@@ -31,7 +33,10 @@ def generate_student_report_charts(uin, grade_file):
         
         # Anything that creates a file or directory in this function is commented out right now
         # See Lines 34, 42, 51, 60, and 69
-        # os.mkdir(uin)
+        try:
+            os.mkdir(uin)
+        except FileExistsError:
+            print(f"Directory and Bar Graphs already created for {uin}")
         
         # Exam Bar Chart
         exams = [float(exam) for exam in file_rows[student_info][19:22]]
@@ -39,8 +44,9 @@ def generate_student_report_charts(uin, grade_file):
         exam_bar = plt.bar(file_rows[0][19:22], exams, align='center')
         plt.yticks(range(0,110,10))
         plt.title(f"{uin} CSCE 110 Exam Grades")
-        #plt.savefig(os.path.join(uin, "exam_bar.png"))
-        plt.show()
+        plt.savefig(os.path.join(uin, "exam_bar.png"))
+        plt.close()
+        #plt.show()
         
         # Lab Bar Chart
         labs = [float(lab) for lab in file_rows[student_info][1:7]]
@@ -48,8 +54,9 @@ def generate_student_report_charts(uin, grade_file):
         lab_bar = plt.bar(file_rows[0][1:7], labs, align='center')
         plt.yticks(range(0,110,10))
         plt.title(f"{uin} CSCE 110 Lab Grades")
-        #plt.savefig(os.path.join(uin, "lab_bar.png"))
-        plt.show()
+        plt.savefig(os.path.join(uin, "lab_bar.png"))
+        plt.close()
+        #plt.show()
         
         # Quiz Bar Chart
         quizzes = [float(quiz) for quiz in file_rows[student_info][7:13]]
@@ -57,8 +64,9 @@ def generate_student_report_charts(uin, grade_file):
         quizes_bar = plt.bar(file_rows[0][7:13], quizzes, align='center')
         plt.yticks(range(0,110,10))
         plt.title(f"{uin} CSCE 110 Quiz Grades")
-        #plt.savefig(os.path.join(uin, "quiz_bar.png"))
-        plt.show()
+        plt.savefig(os.path.join(uin, "quiz_bar.png"))
+        plt.close()
+        #plt.show()
         
         # Reading Bar Chart
         readings = [float(reading) for reading in file_rows[student_info][13:19]]
@@ -66,8 +74,9 @@ def generate_student_report_charts(uin, grade_file):
         readings_bar = plt.bar(file_rows[0][13:19], readings, align='center')
         plt.yticks(range(0,110,10))
         plt.title(f"{uin} CSCE 110 Reading Grades")
-        #plt.savefig(os.path.join(uin, "reading.png"))
-        plt.show()
+        plt.savefig(os.path.join(uin, "reading.png"))
+        plt.close()
+        #plt.show()
         
         
 # Option 4 Function
@@ -130,8 +139,6 @@ def generate_class_report(grade_file):
             mid_index = int(((len(ordered_averages)-1) / 2))
             
             score_median = ordered_averages[mid_index]
-            
-        # print(score_median)
         
         # Mean Score
         score_mean = sum(averages) / len(averages)
@@ -152,3 +159,79 @@ def generate_class_report(grade_file):
         report.write(f"Median score: {score_median}\n")
         report.write(f"Mean score: {score_mean}\n")
         report.write(f"Standard deviation: {score_std_dev}\n")
+        
+
+# Option 5 Function
+def generate_class_report_chart(grade_file):
+    with open(grade_file, 'r') as file:
+        file_reader = csv.reader(file, delimiter=',')
+    
+        file_rows = []
+        for line1 in file_reader:
+            file_rows.append(line1)
+            
+        
+        averages = []
+        
+        for student in range(1, len(file_rows)):
+            exam1 = float(file_rows[student][19])
+            exam2 = float(file_rows[student][20])
+            exam3 = float(file_rows[student][21])
+            
+            lab_grades = [float(lab) for lab in file_rows[student][1:7]]
+            lab_average = sum(lab_grades) / 6
+            
+            quiz_grades = [float(quiz) for quiz in file_rows[student][7:13]]
+            quiz_average = sum(quiz_grades) / 6
+            
+            reading_grades = [float(reading) for reading in file_rows[student][13:19]]
+            reading_average = sum(reading_grades) / 6
+            
+            project = float(file_rows[student][22])
+            
+            student_average = (exam1 * 0.15) + (exam2 * 0.15) + (exam3 * 0.15) + (lab_average * 0.25) + (quiz_average * 0.10) + (reading_average * 0.10) + (project * 0.10)
+            averages.append(student_average)
+            
+        num_A = 0
+        num_B = 0
+        num_C = 0
+        num_D = 0
+        num_F = 0
+        for grade1 in averages:
+            if grade1 >= 90:
+                num_A += 1
+            elif (grade1 >= 80) and (grade1 < 90):
+                num_B += 1
+            elif (grade1 >= 70) and (grade1 < 80):
+                num_C += 1
+            elif (grade1 >= 60) and (grade1 < 70):
+                num_D += 1
+            elif grade1 < 60:
+                num_F += 1
+                
+        num_letter_avg = [num_A, num_B, num_C, num_D, num_F]
+        
+        # print(file_rows[student_info])
+        
+        # Anything that creates a file or directory in this function is commented out right now
+        # See Lines 34, 42, 51, 60, and 69
+        try:
+            os.mkdir("class_charts")
+        except FileExistsError:
+            print(f"Directory and Graphs already created for Class Charts")
+        
+        # Letter Grade Bar Chart
+        
+        letter_grade_bar = plt.bar(['A', 'B', 'C', 'D', 'F'], num_letter_avg, align='center')
+        plt.yticks(range(0,110,10))
+        plt.title(f"Bar Graph Distribution of CSCE 110 Letter Grades")
+        plt.savefig(os.path.join("class_charts", "letter_grade_bar.png"))
+        plt.close()
+        #plt.show()
+        
+        # Letter Grade Pie Chart
+        # pie_chart = plt.figure()
+        plt.pie(num_letter_avg, labels=['A', 'B', 'C', 'D', 'F'])
+        plt.title(f"Pie Chart Distribution of CSCE 110 Letter Grades")
+        plt.savefig(os.path.join("class_charts", "letter_grade_pie.png"))
+        plt.close()
