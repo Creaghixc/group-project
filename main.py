@@ -1,3 +1,8 @@
+# File:    main.py
+# Author:  Isaiah Creagh; 
+# Date:    08/08/2023
+# Email:  creaghixc@tamu.edu; 
+
 # Main Program Outline I'm using to test
 # So far Options 3 through 6 have functionality
 from ebo_functions import generate_student_report_charts, generate_class_report, generate_class_report_chart
@@ -12,9 +17,9 @@ while prog_switch == 1:
     print("4. Generate class report file")
     print("5. Generate class report charts")
     print("6. Quit")
-    
+
     user_option = input("Enter an option number: ")
-    
+
     if user_option == '1':
         read_file('grades.csv')
         print()

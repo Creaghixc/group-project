@@ -12,6 +12,7 @@ def check_uin(uin):
         valid_uin = True
     else:
         valid_uin = False
+        print("Error: Invalid uin")
     return valid_uin
     
 def generate_student_report(grade_file):
@@ -88,8 +89,3 @@ def generate_student_report(grade_file):
                     student_report.write(f"Score: {score}\n")
                     student_report.write(f"Letter grade: {letter_grade}\n")
                 student_report.close()
-                            
-            
-    
-    
-    
