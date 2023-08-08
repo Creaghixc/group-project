@@ -1,10 +1,8 @@
 # File:    main.py
-# Author:  Isaiah Creagh; 
+# Author:  Isaiah Creagh; Erwin B. Olexa
 # Date:    08/08/2023
-# Email:  creaghixc@tamu.edu; 
+# Email:  creaghixc@tamu.edu; bolexa@tamu.edu
 
-# Main Program Outline I'm using to test
-# So far Options 3 through 6 have functionality
 from ebo_functions import generate_student_report_charts, generate_class_report, generate_class_report_chart
 from project import read_file, check_uin, generate_student_report
 
