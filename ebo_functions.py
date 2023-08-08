@@ -1,3 +1,8 @@
+# File:    main.py
+# Author:  Isaiah Creagh; Erwin B. Olexa
+# Date:    08/08/2023
+# Email:  creaghixc@tamu.edu; bolexa@tamu.edu
+
 # A file for all my functions, just for organization
 # Can either be imported or copy-pasted
 

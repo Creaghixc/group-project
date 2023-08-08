@@ -1,3 +1,7 @@
+# File:    project.py
+# Author:  Isaiah Creagh; Erwin B. Olexa
+# Date:    08/08/2023
+# Email:  creaghixc@tamu.edu; bolexa@tamu.edu
 import csv
 
 # Option 1 read file 
